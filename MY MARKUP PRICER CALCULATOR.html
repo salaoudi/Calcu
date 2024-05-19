@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+            <title>SALEH's PRICER</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                }
+                .calculator-container {
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    max-width: 400px;
+                    width: 100%;
+                }
+                .calculator-container h1 {
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                    text-align: center;
+                }
+                .calculator-container label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                }
+                .calculator-container input[type="number"] {
+                    width: 100%;
+                    padding: 8px;
+                    margin-bottom: 15px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    font-size: 16px; /* Increase font size to prevent zooming */
+                }
+                .calculator-container h2, .calculator-container h3 {
+                    text-align: center;
+                    margin-top: 20px;
+                    font-size: 20px;
+                    color: #333;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="calculator-container">
+                <h1>SALEH's Calculator</h1>
+                <form id="calculatorForm">
+                    <label for="boxPrice">Box Price (Your Cost Price):</label>
+                    <input type="number" id="boxPrice" name="boxPrice" step="0.01" required oninput="calculateMarkup()">
+        
+                    <label for="unitCount">Number of Units:</label>
+                    <input type="number" id="unitCount" name="unitCount" required oninput="calculateMarkup()">
+        
+                    <label for="markupPercentage">Markup Percentage (%):</label>
+                    <input type="number" id="markupPercentage" name="markupPercentage" step="0.01" required oninput="calculateMarkup()">
+                </form>
+                <h3 id="costPerUnit">The cost per unit is: .00</h3>
+                <h2 id="result">The selling price per unit is: .00</h2>
+            </div>
+        
+            <script>
+                function calculateMarkup() {
+                    var boxPrice = parseFloat(document.getElementById('boxPrice').value);
+                    var unitCount = parseFloat(document.getElementById('unitCount').value);
+                    var markupPercentage = parseFloat(document.getElementById('markupPercentage').value);
+        
+                    if (isNaN(boxPrice) || isNaN(unitCount) || unitCount <= 0) {
+                        document.getElementById('costPerUnit').innerText = "The cost per unit is: .00";
+                        document.getElementById('result').innerText = "The selling price per unit is: .00";
+                        return;
+                    }
+        
+                    var costPerUnit = boxPrice / unitCount;
+                    document.getElementById('costPerUnit').innerText = "The cost per unit is: $" + costPerUnit.toFixed(2);
+        
+                    if (isNaN(markupPercentage)) {
+                        document.getElementById('result').innerText = "The selling price per unit is: .00";
+                        return;
+                    }
+        
+                    var markupAmount = costPerUnit * (markupPercentage / 100);
+                    var sellingPrice = costPerUnit + markupAmount;
+        
+                    document.getElementById('result').innerText = "The selling price per unit is: $" + sellingPrice.toFixed(2);
+                }
+            </script>
+        </body>
+        </html>
